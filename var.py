@@ -13,4 +13,4 @@ x_fondo=0
 puntos=0
 cx=window_width*0.1
 cy=window_height*0.35
-
+gloabl f
