@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>img/fondo_mar.png</file>
+  </qresource>
+</RCC>
