@@ -3,40 +3,80 @@ from random import randint
 import pygame, var, sys, eventos
 
 
+class Coche(pygame.sprite.Sprite):
+    # Definimos el objeto coche
+
+    def __init__(self):
+        super().__init__()
+        self.image = var.coche[0]
+        self.rect = self.image.get_rect()
+        self.rect.y = var.cy
+        self.rect.x = var.cx
+
+    def update(self):
+        # Definimos el movimiento del coche
+        key = pygame.key.get_pressed()
+
+        if (key[pygame.K_a] or key[pygame.K_LEFT]) and self.rect.x > 50:
+            self.rect.x -= var.velocidad
+            var.mov = True
+        if (key[pygame.K_d] or key[pygame.K_RIGHT]) and self.rect.x < (var.window_width - 250):
+            self.rect.x += var.velocidad
+            var.mov = True
+        if (key[pygame.K_w] or key[pygame.K_UP]) and self.rect.y > 50:
+            self.rect.y -= var.velocidad
+            var.mov = True
+        if (key[pygame.K_s] or key[pygame.K_DOWN]) and self.rect.y < (var.window_height - 150):
+            self.rect.y += var.velocidad
+            var.mov = True
+        if var.mov == True:
+            self.image = var.coche[1]
+        else:
+            self.image = var.coche[0]
+        var.mov = False
+
+
 class cocheContrario(pygame.sprite.Sprite):
     # Definimos el objeto cocheContrario
 
     def __init__(self):
         super().__init__()
-        b = randint(0, 1)
-        #Cargamos una imagen de coche aleatoria
-        if b == 1:
+        b = randint(0, 5)
+        # Cargamos una imagen de coche aleatoria
+        if b == 0:
             self.image = var.coche2[0]
-            b = 0
-        else:
+        if b == 1:
             self.image = var.coche2[1]
-            b += 1
+        if b == 2:
+            self.image = var.coche2[2]
+        if b == 3:
+            self.image = var.coche2[3]
+        if b == 4:
+            self.image = var.coche2[4]
+        if b == 5:
+            self.image = var.coche2[5]
         self.rect = self.image.get_rect()
-        #
-        y = randint(1, 4)
-        if y == 1:
-            self.rect.y = var.window_height // 4 - 220
-            print(y)
-        elif y == 2:
-            self.rect.y = var.window_height // 2 - 220
-            print(y)
-        elif y == 3:
-            self.rect.y = var.window_height // 4 + var.window_height // 4 * 2 - 220
-            print(y)
-        elif y == 4:
-            self.rect.y = var.window_height - 220
-            print(y)
 
-        self.rect.x = var.window_width - 250
+        y = randint(1, 4)
+        while y == var.carril:
+            if y == var.carril:
+                y = randint(1, 4)
+        var.carril = y
+
+        if y == 1:
+            self.rect.y = randint(var.window_height // 4 - (var.window_height // 5),var.window_height // 4 - (var.window_height // 10))
+        elif y == 2:
+            self.rect.y = var.window_height // 4 + (var.window_height / 15)
+        elif y == 3:
+            self.rect.y = var.window_height // 2 * 1.1
+        elif y == 4:
+            self.rect.y = var.window_height - (var.window_height / 5)
+        self.rect.x = var.window_width + 250
+        self.velocidad = randint(1, var.velocidad_max)
 
     def update(self):
         # Generamos el movimiento del objeto
-        self.rect.x -= var.velocidad
+        self.rect.x -= var.velocidad + self.velocidad
         if self.rect.x < -250:
             self.kill()
 
@@ -44,13 +84,20 @@ class cocheContrario(pygame.sprite.Sprite):
 # Iniciamos pygame
 pygame.init()
 pygame.display.set_caption("Drunk Driver")
+# agregamos el coche que controlamos al grupo de sprites
+cochePrincipal = pygame.sprite.Group()
+coche = Coche()
+cochePrincipal.add(coche)
 # agregamos los coches en direccion contraria al grupo de sprites
-sprites = pygame.sprite.Group()
-coches = cocheContrario()
-sprites.add(coches)
+enemigos = pygame.sprite.Group()
+cochesCon = cocheContrario()
+enemigos.add(cochesCon)
 
+# Definimos las colisiones entre los coches
+reloj = pygame.time.Clock()
+k = randint(var.window_height // 4 - (var.window_height // 5), var.window_height // 4 + (var.window_height // 5))
+print(k)
 while True:
-    key = pygame.key.get_pressed()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -60,11 +107,37 @@ while True:
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.1)
         var.musica = 0
+    reloj.tick(var.fps)
+    var.temporizador += 1
+    tiempo = var.temporizador / var.fps
+    if tiempo > var.segundos:
+        cochesCon = cocheContrario()
+        enemigos.add(cochesCon)
+        var.temporizador = 0
+        var.contador_tiempo += 1
+        if var.segundos > 0.5:
+            if var.contador_tiempo > 4:
+                var.segundos -= 0.1
+                var.contador_velocidad += 1
+                var.contador_tiempo = 0
+                print("segundos" + str(var.segundos))
+    if var.contador_velocidad > 50:
+        var.contador_velocidad = 0
+        if var.velocidad_max < 50:
+            print(var.velocidad_max)
+            var.velocidad_max += 1
 
-    eventos.Movimientos.MovimientoFondo()
-    sprites.update()
-    sprites.draw(var.screen)
-    eventos.Movimientos.MovimientoCoche()
-    eventos.Movimientos.marcador()
-
+    eventos.Movimientos.Salir()
+    if var.chocar == False:
+        eventos.Movimientos.MovimientoFondo()
+        enemigos.update()
+        enemigos.draw(var.screen)
+        cochePrincipal.update()
+        cochePrincipal.draw(var.screen)
+        eventos.Movimientos.marcador()
+        colision = pygame.sprite.spritecollide(coche, enemigos, False)
+        if colision:
+            var.velocidad = 0
+            eventos.Movimientos.mensajeChocar()
+            var.chocar = True
     pygame.display.update()
