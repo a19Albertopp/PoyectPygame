@@ -28,6 +28,7 @@ cx=window_width*0.1
 cy=window_height*0.35
 fps=144
 temporizador=0
+temporizador2=0
 contador_tiempo=0
 contador_velocidad=0
 velocidad_max=3

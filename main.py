@@ -62,6 +62,7 @@ class cocheContrario(pygame.sprite.Sprite):
             if y == var.carril:
                 y = randint(1, 4)
         var.carril = y
+        y=1
         if y == 1:
             self.rect.y = randint(var.window_height // 4 - (var.window_height // 5),var.window_height // 4 - (var.window_height // 10))
         elif y == 2:
@@ -100,30 +101,43 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+            #agregamos la musica con un bucle infinito al iniciar pygame
     if var.musica == 1:
         pygame.mixer.music.load('res/Wild West Coast Racing.mp3')
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.1)
         var.musica = 0
+    #Definimos los FPS del juego
     reloj.tick(var.fps)
+    #Contador que sirve para controlar el tiempo de reaparicion de los coches
     var.temporizador += 1
+    #Dividimos el temporizador con los fps para sacar los segundos de ejecucion
     tiempo = var.temporizador / var.fps
+
     if tiempo > var.segundos:
+        #Cada vez que la variable tiempo es mayor que los segundos establecidos, se genera un coche nuevo y se incrementa el contador de tiempo en 1
         cochesCon = cocheContrario()
         enemigos.add(cochesCon)
         var.temporizador = 0
         var.contador_tiempo += 1
-        if var.segundos > 0.5:
+        if var.segundos > 0.5: #0.5 es la velocidad minima para la generacion de los coches
             if var.contador_tiempo > 4:
+                #Cada vez que el contador tiempo es mayor que 4 se resta 0,1 a la variable segundos por lo que el tiempo de regeneracion de los coches disminuye
                 var.segundos -= 0.1
-                var.contador_velocidad += 1
                 var.contador_tiempo = 0
                 print("segundos" + str(var.segundos))
-    if var.contador_velocidad > 50:
-        var.contador_velocidad = 0
-        if var.velocidad_max < 50:
-            print(var.velocidad_max)
-            var.velocidad_max += 1
+    #Creamos otro temporizador para que cada x segundos aumente la melocidad maxima de los coches
+    var.temporizador2+=1
+    tiempo = var.temporizador2 / var.fps
+    if tiempo>1:
+        # Incrementamos el contador de velocidad cada segundo de ejecucion
+        var.contador_velocidad += 1
+        var.temporizador2=0
+        if var.contador_velocidad > 30:
+            #Al pasar 30 segundos se incrementa la velocidad en 1
+            var.contador_velocidad = 0
+            if var.velocidad_max < 6:
+                var.velocidad_max += 1
 
     eventos.Movimientos.Salir()
     if var.chocar == False:
