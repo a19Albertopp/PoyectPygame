@@ -30,4 +30,4 @@ class Movimientos():
     def mensajeChocar():
         fuente=pygame.font.SysFont("serif",100)
         mensajeChocar=fuente.render("HAS CHOCADO",True,(0,0,0))
-        var.screen.blit(mensajeChocar, (var.window_width//2, var.window_height//2))
+        var.screen.blit(mensajeChocar, (var.window_width//4, var.window_height//2))

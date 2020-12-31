@@ -62,15 +62,14 @@ class cocheContrario(pygame.sprite.Sprite):
             if y == var.carril:
                 y = randint(1, 4)
         var.carril = y
-
         if y == 1:
             self.rect.y = randint(var.window_height // 4 - (var.window_height // 5),var.window_height // 4 - (var.window_height // 10))
         elif y == 2:
-            self.rect.y = var.window_height // 4 + (var.window_height / 15)
+            self.rect.y = randint(var.window_height // 4, var.window_height // 4 + (var.window_height // 8))
         elif y == 3:
-            self.rect.y = var.window_height // 2 * 1.1
+            self.rect.y = randint(var.window_height // 2 ,var.window_height // 2 * 1.3)
         elif y == 4:
-            self.rect.y = var.window_height - (var.window_height / 5)
+            self.rect.y = randint(var.window_height - (var.window_height // 4),var.window_height - (var.window_height // 8))
         self.rect.x = var.window_width + 250
         self.velocidad = randint(1, var.velocidad_max)
 
@@ -95,8 +94,7 @@ enemigos.add(cochesCon)
 
 # Definimos las colisiones entre los coches
 reloj = pygame.time.Clock()
-k = randint(var.window_height // 4 - (var.window_height // 5), var.window_height // 4 + (var.window_height // 5))
-print(k)
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
