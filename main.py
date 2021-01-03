@@ -1,155 +1,33 @@
 from random import randint
+from PyQt5 import QtPrintSupport
+from VenChocar import *
+from Ven_Nombre import *
+import pygame, var, sys, eventos, juego
 
-import pygame, var, sys, eventos
 
-
-class Coche(pygame.sprite.Sprite):
-    # Definimos el objeto coche
-
+class main(QtWidgets.QMainWindow):
     def __init__(self):
-        super().__init__()
-        self.image = var.coche[0]
-        self.rect = self.image.get_rect()
-        self.rect.y = var.cy
-        self.rect.x = var.cx
-
-    def update(self):
-        # Definimos el movimiento del coche
-        key = pygame.key.get_pressed()
-
-        if (key[pygame.K_a] or key[pygame.K_LEFT]) and self.rect.x > 50:
-            self.rect.x -= var.velocidad
-            var.mov = True
-        if (key[pygame.K_d] or key[pygame.K_RIGHT]) and self.rect.x < (var.window_width - 250):
-            self.rect.x += var.velocidad
-            var.mov = True
-        if (key[pygame.K_w] or key[pygame.K_UP]) and self.rect.y > 50:
-            self.rect.y -= var.velocidad
-            var.mov = True
-        if (key[pygame.K_s] or key[pygame.K_DOWN]) and self.rect.y < (var.window_height - 150):
-            self.rect.y += var.velocidad
-            var.mov = True
-        if var.mov == True:
-            self.image = var.coche[1]
-        else:
-            self.image = var.coche[0]
-        var.mov = False
+        super(main, self).__init__()
+        var.ui = Ui_VenChocar()
+        var.ui.setupUi(self)
+        QtWidgets.QAction(self).triggered.connect(self.close)
+        var.ui.btnJugar.clicked.connect(eventos.eventosVentanas.abrirNombre)
+        var.dlgNombre = DialogNombre()
 
 
-class cocheContrario(pygame.sprite.Sprite):
-    # Definimos el objeto cocheContrario
-
+class DialogNombre(QtWidgets.QDialog):
     def __init__(self):
-        super().__init__()
-        b = randint(0, 5)
-        # Cargamos una imagen de coche aleatoria
-        if b == 0:
-            self.image = var.coche2[0]
-        if b == 1:
-            self.image = var.coche2[1]
-        if b == 2:
-            self.image = var.coche2[2]
-        if b == 3:
-            self.image = var.coche2[3]
-        if b == 4:
-            self.image = var.coche2[4]
-        if b == 5:
-            self.image = var.coche2[5]
-        self.rect = self.image.get_rect()
-
-        y = randint(1, 4)
-        while y == var.carril:
-            if y == var.carril:
-                y = randint(1, 4)
-        var.carril = y
-        y=1
-        if y == 1:
-            self.rect.y = randint(var.window_height // 4 - (var.window_height // 5),var.window_height // 4 - (var.window_height // 10))
-        elif y == 2:
-            self.rect.y = randint(var.window_height // 4, var.window_height // 4 + (var.window_height // 8))
-        elif y == 3:
-            self.rect.y = randint(var.window_height // 2 ,var.window_height // 2 * 1.3)
-        elif y == 4:
-            self.rect.y = randint(var.window_height - (var.window_height // 4),var.window_height - (var.window_height // 8))
-        self.rect.x = var.window_width + 250
-        self.velocidad = randint(1, var.velocidad_max)
-
-    def update(self):
-        # Generamos el movimiento del objeto
-        self.rect.x -= var.velocidad + self.velocidad
-        if self.rect.x < -250:
-            self.kill()
+        super(DialogNombre, self).__init__()
+        var.dlgNombre = Ui_VenNombre()
+        var.dlgNombre.setupUi(self)
+        var.dlgNombre.btnBoxNombre.button(QtWidgets.QDialogButtonBox.Cancel).setText('CANCELAR')
+        var.dlgNombre.btnBoxNombre.button(QtWidgets.QDialogButtonBox.Ok).setText('JUGAR')
+        var.dlgNombre.btnBoxNombre.button(QtWidgets.QDialogButtonBox.Cancel).clicked.connect(eventos.eventosVentanas.cerrarNombre)
+        var.dlgNombre.btnBoxNombre.button(QtWidgets.QDialogButtonBox.Ok).clicked.connect(eventos.eventosVentanas.ValidarNombre)
 
 
-# Iniciamos pygame
-pygame.init()
-pygame.display.set_caption("Drunk Driver")
-# agregamos el coche que controlamos al grupo de sprites
-cochePrincipal = pygame.sprite.Group()
-coche = Coche()
-cochePrincipal.add(coche)
-# agregamos los coches en direccion contraria al grupo de sprites
-enemigos = pygame.sprite.Group()
-cochesCon = cocheContrario()
-enemigos.add(cochesCon)
-
-# Definimos las colisiones entre los coches
-reloj = pygame.time.Clock()
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-            #agregamos la musica con un bucle infinito al iniciar pygame
-    if var.musica == 1:
-        pygame.mixer.music.load('res/Wild West Coast Racing.mp3')
-        pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.1)
-        var.musica = 0
-    #Definimos los FPS del juego
-    reloj.tick(var.fps)
-    #Contador que sirve para controlar el tiempo de reaparicion de los coches
-    var.temporizador += 1
-    #Dividimos el temporizador con los fps para sacar los segundos de ejecucion
-    tiempo = var.temporizador / var.fps
-
-    if tiempo > var.segundos:
-        #Cada vez que la variable tiempo es mayor que los segundos establecidos, se genera un coche nuevo y se incrementa el contador de tiempo en 1
-        cochesCon = cocheContrario()
-        enemigos.add(cochesCon)
-        var.temporizador = 0
-        var.contador_tiempo += 1
-        if var.segundos > 0.5: #0.5 es la velocidad minima para la generacion de los coches
-            if var.contador_tiempo > 4:
-                #Cada vez que el contador tiempo es mayor que 4 se resta 0,1 a la variable segundos por lo que el tiempo de regeneracion de los coches disminuye
-                var.segundos -= 0.1
-                var.contador_tiempo = 0
-                print("segundos" + str(var.segundos))
-    #Creamos otro temporizador para que cada x segundos aumente la melocidad maxima de los coches
-    var.temporizador2+=1
-    tiempo = var.temporizador2 / var.fps
-    if tiempo>1:
-        # Incrementamos el contador de velocidad cada segundo de ejecucion
-        var.contador_velocidad += 1
-        var.temporizador2=0
-        if var.contador_velocidad > 30:
-            #Al pasar 30 segundos se incrementa la velocidad en 1
-            var.contador_velocidad = 0
-            if var.velocidad_max < 6:
-                var.velocidad_max += 1
-
-    eventos.Movimientos.Salir()
-    if var.chocar == False:
-        eventos.Movimientos.MovimientoFondo()
-        enemigos.update()
-        enemigos.draw(var.screen)
-        cochePrincipal.update()
-        cochePrincipal.draw(var.screen)
-        eventos.Movimientos.marcador()
-        colision = pygame.sprite.spritecollide(coche, enemigos, False)
-        if colision:
-            var.velocidad = 0
-            eventos.Movimientos.mensajeChocar()
-            var.chocar = True
-    pygame.display.update()
+if __name__ == '__main__':
+    app = QtWidgets.QApplication([])
+    var.window = main()
+    var.window.showMaximized()
+    sys.exit(app.exec())

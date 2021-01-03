@@ -1,6 +1,7 @@
 from random import randint
-
-import var, pygame, sys
+from VenChocar import *
+from Ven_Nombre import *
+import var, pygame, sys,juego
 
 
 class Movimientos():
@@ -13,7 +14,7 @@ class Movimientos():
         var.screen.blit(var.fondo, (var.x_fondo, 0))
 
     def Salir():
-        #Definimos que al pulsar escape se cierre el juego
+        # Definimos que al pulsar escape se cierre el juego
         key = pygame.key.get_pressed()
         if key[pygame.K_ESCAPE]:
             pygame.quit()
@@ -28,6 +29,33 @@ class Movimientos():
         var.screen.blit(mensaje, (var.window_width - 200, +30))
 
     def mensajeChocar():
-        fuente=pygame.font.SysFont("serif",100)
-        mensajeChocar=fuente.render("HAS CHOCADO",True,(0,0,0))
-        var.screen.blit(mensajeChocar, (var.window_width//4, var.window_height//2))
+        fuente = pygame.font.SysFont("serif", 100)
+        mensajeChocar = fuente.render("HAS CHOCADO", True, (0, 0, 0))
+        var.screen.blit(mensajeChocar, (var.window_width // 4, var.window_height // 2))
+
+
+class eventosVentanas():
+    def cerrarNombre():
+        try:
+            var.dlgNombre.show()
+            if var.dlgNombre.exec_():
+                var.dlgNombre.hide()
+        except Exception as error:
+            print('Error cerrarNombre: %s' % str(error))
+
+    def ValidarNombre():
+        try:
+            var.dlgNombre.show()
+
+            juego.Juego.bucle_juego()
+            if var.dlgNombre.exec_():
+                var.dlgNombre.hide()
+        except Exception as error:
+            print('Error ValidarNombre: %s' % str(error))
+    def abrirNombre():
+        try:
+            var.dlgNombre.show()
+            if var.dlgNombre.exec_():
+                var.dlgNombre.hide()
+        except Exception as error:
+            print('Error abrirNombre: %s' % str(error))
