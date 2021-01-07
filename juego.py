@@ -1,7 +1,7 @@
 from random import randint
 
 
-import pygame, var, sys, eventos
+import pygame, var, sys, eventos,conexion
 
 
 class Coche(pygame.sprite.Sprite):
@@ -157,6 +157,7 @@ class Juego():
                 if colision:
                     var.velocidad = 0
                     eventos.Movimientos.mensajeChocar()
+                    conexion.Conexion.guardarPuntuacion()
                     var.chocar = True
             var.window.hide()
             var.dlgNombre.hide()

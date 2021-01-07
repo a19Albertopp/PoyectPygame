@@ -46,9 +46,10 @@ class eventosVentanas():
     def ValidarNombre():
         try:
             var.dlgNombre.show()
-
-            juego.Juego.bucle_juego()
-            if var.dlgNombre.exec_():
+            if var.editNombre.text()!='':
+                var.nombre=var.editNombre.text()
+                juego.Juego.bucle_juego()
+            if var.dlgNombre.exec_() or pygame.key.get_pressed()[pygame.K_ESCAPE]:
                 var.dlgNombre.hide()
         except Exception as error:
             print('Error ValidarNombre: %s' % str(error))

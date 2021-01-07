@@ -5,6 +5,9 @@ window_height=GetSystemMetrics(1)
 window_width=GetSystemMetrics(0)
 
 
+
+
+
 screen=pygame.display.set_mode((window_width, window_height))
 fondo=pygame.image.load('res/carretera1.png').convert()
 fondo=pygame.transform.scale(fondo,(window_width*2,window_height))
@@ -34,6 +37,9 @@ segundos=2
 carril=0
 global ui
 global dlgNombre
+global editNombre
+global nombre
+base='coches.db'
 
 global window
 # "Wild West Coast Racing" by Eric Matyas soundimage.org
