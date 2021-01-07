@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, QtSql
-
+from datetime import datetime
 import var
 class Conexion():
     def db_connect(filename):
@@ -17,10 +17,12 @@ class Conexion():
     def guardarPuntuacion():
         query = QtSql.QSqlQuery()
         query.prepare(
-            'insert into marcador (puntos, nombre)'
-            'VALUES (:puntos, :nombre)')
+            'insert into marcador (puntos, nombre,fecha)'
+            'VALUES (:puntos, :nombre,:fecha)')
         query.bindValue(':puntos', str(var.puntos))
         query.bindValue(':nombre', str(var.nombre))
+        query.bindValue(':fecha', str(datetime.strftime(datetime.now(), "%d/%m/%Y")))
+
         if query.exec_():
             print("Guardado Correcto")
         else:
