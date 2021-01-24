@@ -1,7 +1,6 @@
 from random import randint
-from VenChocar import *
-from Ven_Nombre import *
-import var, pygame, sys,juego
+
+import var, pygame, sys
 
 
 class Movimientos():
@@ -20,6 +19,14 @@ class Movimientos():
             pygame.quit()
             sys.exit()
 
+    def AtrasMenu():
+        # Definimos que al pulsar escape se cierre el juego
+        key = pygame.key.get_pressed()
+        if key[pygame.K_p]:
+            pygame.mixer.music.stop()
+            var.jugando=False
+            var.menu=True
+
     def marcador():
         # La puntuacion es un autoincrementable que crece indefinidamente
         fuente = pygame.font.SysFont("serif", 30)
@@ -33,30 +40,3 @@ class Movimientos():
         mensajeChocar = fuente.render("HAS CHOCADO", True, (0, 0, 0))
         var.screen.blit(mensajeChocar, (var.window_width // 4, var.window_height // 2))
 
-
-class eventosVentanas():
-    def cerrarNombre():
-        try:
-            var.dlgNombre.show()
-            if var.dlgNombre.exec_():
-                var.dlgNombre.hide()
-        except Exception as error:
-            print('Error cerrarNombre: %s' % str(error))
-
-    def ValidarNombre():
-        try:
-            var.dlgNombre.show()
-            if var.editNombre.text()!='':
-                var.nombre=var.editNombre.text()
-                juego.Juego.bucle_juego()
-            if var.dlgNombre.exec_() or pygame.key.get_pressed()[pygame.K_ESCAPE]:
-                var.dlgNombre.hide()
-        except Exception as error:
-            print('Error ValidarNombre: %s' % str(error))
-    def abrirNombre():
-        try:
-            var.dlgNombre.show()
-            if var.dlgNombre.exec_():
-                var.dlgNombre.hide()
-        except Exception as error:
-            print('Error abrirNombre: %s' % str(error))
