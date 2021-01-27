@@ -54,6 +54,7 @@ botones=0
 global window
 # "Wild West Coast Racing" by Eric Matyas soundimage.org
 jugador=""
-
+escribiendo=False
 
 ce=0
+

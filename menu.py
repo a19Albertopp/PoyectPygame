@@ -75,8 +75,8 @@ def menu():
         font = pygame.font.SysFont("serif", 35)
         var.screen.blit(var.fondo_menu, (0, 0))
 
-        #texto=font.render(var.jugador,True,(255,0,0)) editText
-        #var.screen.blit(texto,(0,0))
+        texto=font.render(var.jugador,True,(255,0,0)) #editText
+        var.screen.blit(texto,(0,0))
         while var.botones<=1:
 
             boton=Boton()
@@ -98,7 +98,16 @@ def menu():
                 Botones.update(mx,my)
                 if event.button == 1:
                     pass
-            #if event.type==KEYDOWN: para el editText
-                #var.jugador+=event.unicode
+
+            if var.escribiendo:
+                if event.type==KEYDOWN: #para el editText
+
+                    var.jugador+=event.unicode
+
+                key = pygame.key.get_pressed()
+                if key[pygame.K_BACKSPACE]:
+                    var.jugador = var.jugador[:-2]
+
+
         pygame.display.update()
         reloj.tick(var.fps)
