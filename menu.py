@@ -39,10 +39,9 @@ class Boton(pygame.sprite.Sprite):
                 pygame.quit()
                 sys.exit()
             if self.boton == 2:
-                var.jugador=""
+                if(var.jugador=="ESCRIBE TU NOMBRE"):
+                    var.jugador=""
                 var.escribiendo=True
-            if self.boton == 3:
-                pass
 
 
 # def Texto(text, font, color, surface, x, y):
@@ -97,6 +96,9 @@ def menu():
                     pygame.quit()
                     sys.exit()
             if event.type == MOUSEBUTTONDOWN:
+                var.escribiendo=False
+                if(var.jugador==""):
+                    var.jugador="ESCRIBE TU NOMBRE"
                 Botones.update(mx, my)
                 if event.button == 1:
                     pass
