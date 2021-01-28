@@ -20,7 +20,7 @@ class Conexion():
             'insert into marcador (puntos, nombre,fecha)'
             'VALUES (:puntos, :nombre,:fecha)')
         query.bindValue(':puntos', str(var.puntos))
-        query.bindValue(':nombre', str(var.nombre))
+        query.bindValue(':nombre', str(var.jugador))
         query.bindValue(':fecha', str(datetime.strftime(datetime.now(), "%d/%m/%Y")))
 
         if query.exec_():

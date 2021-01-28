@@ -96,7 +96,7 @@ pygame.display.set_caption("Drunk Driver")
 # enemigos = pygame.sprite.Group()
 # cochesCon = cocheContrario()
 # enemigos.add(cochesCon)
-
+conexion.Conexion.db_connect(var.base)
 reloj = pygame.time.Clock()
 key = pygame.key.get_pressed()
 while True:
@@ -182,7 +182,7 @@ while True:
             if colision:
                 var.velocidad = 0
                 eventos.Movimientos.mensajeChocar()
-                #conexion.Conexion.guardarPuntuacion()
+                conexion.Conexion.guardarPuntuacion()
                 var.chocar = True
                 var.jugando = False
                 var.menu=True

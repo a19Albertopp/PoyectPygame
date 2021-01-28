@@ -6,7 +6,8 @@ from pygame.locals import *
 
 reloj = pygame.time.Clock()
 
-#Crear un sprite de botones y en el update comparar la posicion de los botones con el mause y si clicka que haga el evento
+
+# Crear un sprite de botones y en el update comparar la posicion de los botones con el mause y si clicka que haga el evento
 
 class Boton(pygame.sprite.Sprite):
 
@@ -14,31 +15,34 @@ class Boton(pygame.sprite.Sprite):
         super().__init__()
         self.image = var.boton_1
         self.rect = self.image.get_rect()
-        if var.botones==0:
+        if var.botones == 0:
             self.image = var.boton_1
-            print('boton 1')
-            self.rect.y = var.window_height/2-200
-            self.rect.x = var.window_width/2-200
-        self.boton=var.botones
-        if var.botones==1:
-            print('boton 2')
+            self.rect.y = var.window_height / 2 - 200
+            self.rect.x = var.window_width / 2 - 200
+        self.boton = var.botones
+        if var.botones == 1:
             self.image = var.boton_2
-            self.rect.y = var.window_height/2
-            self.rect.x = var.window_width/2-200
-        self.boton=var.botones
+            self.rect.y = var.window_height / 2
+            self.rect.x = var.window_width / 2 - 200
+        self.boton = var.botones
+        if var.botones == 2:
+            self.image = var.boton_3
+            self.rect.y = var.window_height / 3.7
+            self.rect.x = var.window_width / 13
+        self.boton = var.botones
 
-    def update(self,mx,my):
-        if self.rect.collidepoint(mx,my):
-            if self.boton==0:
+    def update(self, mx, my):
+        if self.rect.collidepoint(mx, my):
+            if self.boton == 0:
                 ini()
-            if self.boton==1:
+            if self.boton == 1:
                 pygame.quit()
                 sys.exit()
-            if self.boton==2:
+            if self.boton == 2:
+                var.jugador=""
+                var.escribiendo=True
+            if self.boton == 3:
                 pass
-            if self.boton==3:
-                pass
-
 
 
 # def Texto(text, font, color, surface, x, y):
@@ -68,23 +72,21 @@ def ini():
     var.menu = False
     var.ce = 0
 
-Botones=pygame.sprite.Group()
-def menu():
 
+Botones = pygame.sprite.Group()
+
+
+def menu():
     while var.menu == True:
         font = pygame.font.SysFont("serif", 35)
         var.screen.blit(var.fondo_menu, (0, 0))
 
-        texto=font.render(var.jugador,True,(255,0,0)) #editText
-        var.screen.blit(texto,(0,0))
-        while var.botones<=1:
-
-            boton=Boton()
+        while var.botones <= 2:
+            boton = Boton()
             Botones.add(boton)
-            var.botones+=1
-        mx,my = pygame.mouse.get_pos()
+            var.botones += 1
+        mx, my = pygame.mouse.get_pos()
         Botones.draw(var.screen)
-
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -95,19 +97,20 @@ def menu():
                     pygame.quit()
                     sys.exit()
             if event.type == MOUSEBUTTONDOWN:
-                Botones.update(mx,my)
+                Botones.update(mx, my)
                 if event.button == 1:
                     pass
 
             if var.escribiendo:
-                if event.type==KEYDOWN: #para el editText
+                if event.type == KEYDOWN:  # para el editText
 
-                    var.jugador+=event.unicode
+                    var.jugador += event.unicode
 
                 key = pygame.key.get_pressed()
                 if key[pygame.K_BACKSPACE]:
                     var.jugador = var.jugador[:-2]
 
-
+        texto = font.render(var.jugador, True, (255, 0, 0))  # editText
+        var.screen.blit(texto, (var.window_width / 13, var.window_height / 3.7))
         pygame.display.update()
         reloj.tick(var.fps)
