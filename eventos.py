@@ -15,6 +15,8 @@ class Movimientos():
     def Salir():
         # Definimos que al pulsar escape se cierre el juego
         key = pygame.key.get_pressed()
+
+
         if key[pygame.K_ESCAPE]:
             pygame.quit()
             sys.exit()
@@ -31,8 +33,9 @@ class Movimientos():
         # La puntuacion es un autoincrementable que crece indefinidamente
         fuente = pygame.font.SysFont("serif", 30)
         var.puntos += 1
+        segundos=var.puntos/var.fps
         # definimos como se van a mostrar los puntos
-        mensaje = fuente.render("Puntos: " + str(var.puntos), True, (0, 0, 0))
+        mensaje = fuente.render("Puntos: " + str(segundos), True, (0, 0, 0))
         var.screen.blit(mensaje, (var.window_width - 200, +30))
 
     def mensajeChocar():

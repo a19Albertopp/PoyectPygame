@@ -88,19 +88,12 @@ class cocheContrario(pygame.sprite.Sprite):
 # Iniciamos pygame
 pygame.init()
 pygame.display.set_caption("Drunk Driver")
-# agregamos el coche que controlamos al grupo de sprites
-# cochePrincipal = pygame.sprite.Group()
-# coche = Coche()
-# cochePrincipal.add(coche)
-# # agregamos los coches en direccion contraria al grupo de sprites
-# enemigos = pygame.sprite.Group()
-# cochesCon = cocheContrario()
-# enemigos.add(cochesCon)
 conexion.Conexion.db_connect(var.base)
 reloj = pygame.time.Clock()
 key = pygame.key.get_pressed()
 while True:
     if var.ce==0:
+        # agregamos el coche que controlamos al grupo de sprites
         cochePrincipal = pygame.sprite.Group()
         coche = Coche()
         cochePrincipal.add(coche)
@@ -143,10 +136,11 @@ while True:
             enemigos.add(cochesCon)
             var.temporizador = 0
             var.contador_tiempo += 1
-            if var.segundos > 0.5:  # 0.5 es la velocidad minima para la generacion de los coches
-                if var.contador_tiempo > 4:
+            if var.segundos > 0.4:  # 0.5 es la velocidad minima para la generacion de los coches
+                if var.contador_tiempo >= var.seg:
                     # Cada vez que el contador tiempo es mayor que 4 se resta 0,1 a la variable segundos por lo que el tiempo de regeneracion de los coches disminuye
                     var.segundos -= 0.1
+                    var.seg=var.seg+3
                     var.contador_tiempo = 0
                     print("segundos" + str(var.segundos))
         # Creamos otro temporizador para que cada x segundos aumente la melocidad maxima de los coches
@@ -156,10 +150,13 @@ while True:
             # Incrementamos el contador de velocidad cada segundo de ejecucion
             var.contador_velocidad += 1
             var.temporizador2 = 0
-            if var.contador_velocidad > 30:
-                # Al pasar 30 segundos se incrementa la velocidad en 1
+            if var.contador_velocidad > 20:
+                # Al pasar 20 segundos se incrementa la velocidad en 0.5
                 var.contador_velocidad = 0
-                if var.velocidad_max < 6:
+                if var.velocidad_max <= 6:
+                    print(var.velocidad)
+                    if var.velocidad <4:
+                        var.velocidad+=0.5
                     var.velocidad_max += 1
 
         eventos.Movimientos.Salir()

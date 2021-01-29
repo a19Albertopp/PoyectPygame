@@ -34,14 +34,17 @@ class Boton(pygame.sprite.Sprite):
     def update(self, mx, my):
         if self.rect.collidepoint(mx, my):
             if self.boton == 0:
-                ini()
+                if var.jugador=="ESCRIBE TU NOMBRE":
+                    pass
+                else:
+                    ini()
             if self.boton == 1:
                 pygame.quit()
                 sys.exit()
             if self.boton == 2:
-                if(var.jugador=="ESCRIBE TU NOMBRE"):
-                    var.jugador=""
-                var.escribiendo=True
+                if (var.jugador == "ESCRIBE TU NOMBRE"):
+                    var.jugador = ""
+                var.escribiendo = True
 
 
 # def Texto(text, font, color, surface, x, y):
@@ -65,7 +68,7 @@ def ini():
     var.contador_tiempo = 0
     var.contador_velocidad = 0
     var.velocidad_max = 3
-    var.segundos = 1.5
+    var.segundos = 1
     var.carril = 0
     var.jugando = True
     var.menu = False
@@ -96,9 +99,9 @@ def menu():
                     pygame.quit()
                     sys.exit()
             if event.type == MOUSEBUTTONDOWN:
-                var.escribiendo=False
-                if(var.jugador==""):
-                    var.jugador="ESCRIBE TU NOMBRE"
+                var.escribiendo = False
+                if (var.jugador == ""):
+                    var.jugador = "ESCRIBE TU NOMBRE"
                 Botones.update(mx, my)
                 if event.button == 1:
                     pass

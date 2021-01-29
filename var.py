@@ -33,7 +33,7 @@ mov=False
 jugando=False
 menu=True
 musica=1
-velocidad=3
+velocidad=4
 x_fondo=0
 puntos=0
 cx=window_width*0.1
@@ -43,12 +43,12 @@ temporizador=0
 temporizador2=0
 contador_tiempo=0
 contador_velocidad=0
-velocidad_max=3
-segundos=1.5
+velocidad_max=4
+segundos=1
 carril=0
 base='coches.db'
 botones=0
-
+seg=5
 global window
 # "Wild West Coast Racing" by Eric Matyas soundimage.org
 jugador="ESCRIBE TU NOMBRE"
