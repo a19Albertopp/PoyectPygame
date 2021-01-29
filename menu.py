@@ -71,6 +71,7 @@ def ini():
     var.segundos = 1
     var.carril = 0
     var.tiempo_inicial=pygame.time.get_ticks()
+    var.segundos_actuales=pygame.time.get_ticks()
     var.jugando = True
     var.menu = False
     var.ce = 0

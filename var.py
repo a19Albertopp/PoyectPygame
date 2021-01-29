@@ -57,4 +57,5 @@ escribiendo=False
 ce=0
 
 global tiempo_inicial
+global segundos_actuales
 

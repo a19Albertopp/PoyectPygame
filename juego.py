@@ -128,13 +128,16 @@ while True:
         # Contador que sirve para controlar el tiempo de reaparicion de los coches
         var.temporizador += 1
         # Dividimos el temporizador con los fps para sacar los segundos de ejecucion
-        tiempo = var.temporizador / var.fps
+        #tiempo = var.temporizador / var.fps
+        tiempo=(pygame.time.get_ticks()-var.segundos_actuales)/1000
 
         if tiempo > var.segundos:
+            print("dentro")
             # Cada vez que la variable tiempo es mayor que los segundos establecidos, se genera un coche nuevo y se incrementa el contador de tiempo en 1
             cochesCon = cocheContrario()
             enemigos.add(cochesCon)
             var.temporizador = 0
+            var.segundos_actuales=pygame.time.get_ticks()
             var.contador_tiempo += 1
             if var.segundos > 0.4:  # 0.5 es la velocidad minima para la generacion de los coches
                 if var.contador_tiempo >= var.seg:
