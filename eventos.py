@@ -33,7 +33,7 @@ class Movimientos():
         # La puntuacion es un autoincrementable que crece indefinidamente
         fuente = pygame.font.SysFont("serif", 30)
         var.puntos += 1
-        segundos=var.puntos/var.fps
+        segundos=pygame.time.get_ticks()-var.tiempo_inicial
         # definimos como se van a mostrar los puntos
         mensaje = fuente.render("Puntos: " + str(segundos), True, (0, 0, 0))
         var.screen.blit(mensaje, (var.window_width - 200, +30))
