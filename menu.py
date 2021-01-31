@@ -47,11 +47,7 @@ class Boton(pygame.sprite.Sprite):
                 var.escribiendo = True
 
 
-# def Texto(text, font, color, surface, x, y):
-#      textobj = font.render(text, 1, color)
-#      textrect = textobj.get_rect()
-#      textrect.topleft = (x, y)
-#      surface.blit(textobj, textrect)
+
 
 def ini():
     var.chocar = False
@@ -72,9 +68,12 @@ def ini():
     var.carril = 0
     var.tiempo_inicial=pygame.time.get_ticks()
     var.segundos_actuales=pygame.time.get_ticks()
+    var.segundos_velocidad=pygame.time.get_ticks()
     var.jugando = True
     var.menu = False
+    var.puntuaciones=False
     var.ce = 0
+    Botones.remove()
 
 
 Botones = pygame.sprite.Group()
@@ -105,8 +104,6 @@ def menu():
                 if (var.jugador == ""):
                     var.jugador = "ESCRIBE TU NOMBRE"
                 Botones.update(mx, my)
-                if event.button == 1:
-                    pass
 
             if var.escribiendo:
                 if event.type == KEYDOWN:  # para el editText
@@ -116,7 +113,6 @@ def menu():
                 key = pygame.key.get_pressed()
                 if key[pygame.K_BACKSPACE]:
                     var.jugador = var.jugador[:-2]
-
         texto = font.render(var.jugador, True, (255, 0, 0))  # editText
         var.screen.blit(texto, (var.window_width / 13, var.window_height / 3.7))
         pygame.display.update()

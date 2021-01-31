@@ -1,6 +1,8 @@
 from PyQt5 import QtWidgets, QtSql
 from datetime import datetime
-import var
+import var, puntuaciones
+
+
 class Conexion():
     def db_connect(filename):
         db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
@@ -27,3 +29,18 @@ class Conexion():
             print("Guardado Correcto")
         else:
             print("Error Guardar Puntuacion: ", query.lastError().text())
+
+    def puntuacionGlobal():
+        query = QtSql.QSqlQuery()
+        query.prepare('select nombre, puntos, fecha from marcador order by puntos DESC')
+        i = 1
+        var.contador_puntuacion_global = 0
+        if query.exec_():
+            y = var.window_height / 2-var.window_height/10
+            x = var.window_width / 12
+            while query.next():
+                datos = [str(i), str(query.value(0)), str(query.value(1)), str(query.value(2))]
+                puntuaciones.escribirPuntGlob(datos, x, y)
+                y=y+var.window_height/25
+                i += 1
+                var.contador_puntuacion_global += 1

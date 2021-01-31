@@ -1,6 +1,6 @@
 from random import randint
 
-import pygame, var, sys, eventos, conexion, menu
+import pygame, var, sys, eventos, conexion, menu,puntuaciones
 
 from pygame.locals import *
 
@@ -109,14 +109,10 @@ while True:
             print('salir')
             pygame.quit()
             sys.exit()
-        if event.type==key[pygame.K_p]:
-            var.menu=True
-            var.jugando=False
-            print('patata')
+
 
 
     if var.jugando == True:
-
         if var.musica == 1:
             # agregamos la musica con un bucle infinito al iniciar pygame
             pygame.mixer.music.load('res/Wild West Coast Racing.mp3')
@@ -125,18 +121,13 @@ while True:
             var.musica = 0
         # Definimos los FPS del juego
         reloj.tick(var.fps)
-        # Contador que sirve para controlar el tiempo de reaparicion de los coches
-        var.temporizador += 1
-        # Dividimos el temporizador con los fps para sacar los segundos de ejecucion
-        #tiempo = var.temporizador / var.fps
+        #guardamos en la variable tiempo los segundos que pasa el programa en ejecucion
         tiempo=(pygame.time.get_ticks()-var.segundos_actuales)/1000
 
         if tiempo > var.segundos:
-            print("dentro")
             # Cada vez que la variable tiempo es mayor que los segundos establecidos, se genera un coche nuevo y se incrementa el contador de tiempo en 1
             cochesCon = cocheContrario()
             enemigos.add(cochesCon)
-            var.temporizador = 0
             var.segundos_actuales=pygame.time.get_ticks()
             var.contador_tiempo += 1
             if var.segundos > 0.4:  # 0.5 es la velocidad minima para la generacion de los coches
@@ -148,11 +139,11 @@ while True:
                     print("segundos" + str(var.segundos))
         # Creamos otro temporizador para que cada x segundos aumente la melocidad maxima de los coches
         var.temporizador2 += 1
-        tiempo = var.temporizador2 / var.fps
-        if tiempo > 1:
+        tiempo2 = (pygame.time.get_ticks()-var.segundos_velocidad)/1000
+        if tiempo2 >= 1:
             # Incrementamos el contador de velocidad cada segundo de ejecucion
             var.contador_velocidad += 1
-            var.temporizador2 = 0
+            var.segundos_velocidad=pygame.time.get_ticks()
             if var.contador_velocidad > 20:
                 # Al pasar 20 segundos se incrementa la velocidad en 0.5
                 var.contador_velocidad = 0
@@ -185,9 +176,13 @@ while True:
                 conexion.Conexion.guardarPuntuacion()
                 var.chocar = True
                 var.jugando = False
-                var.menu=True
+                var.menu=False
+                var.puntuaciones=True
                 var.botones=0
                 pygame.mixer.music.stop()
         pygame.display.update()
 
-    menu.menu()
+    if var.menu==True:
+        menu.menu()
+    else:
+        puntuaciones.puntuaciones()

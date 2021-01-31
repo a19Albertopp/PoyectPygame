@@ -9,7 +9,8 @@ window_width=GetSystemMetrics(0)
 
 
 screen=pygame.display.set_mode((window_width, window_height))
-fondo_menu=pygame.image.load('fondo_menu.png').convert()
+fondo_menu=pygame.image.load('res/fondo_menu.png').convert()
+fondo_puntuaciones=pygame.image.load('res/fondo_puntuaciones.png').convert()
 fondo=pygame.image.load('res/carretera1.png').convert()
 boton_1=pygame.image.load('res/boton_1.png').convert()
 boton_3=pygame.image.load('res/boton_nombre.png').convert()
@@ -58,4 +59,11 @@ ce=0
 
 global tiempo_inicial
 global segundos_actuales
+global segundos_velocidad
 
+puntuaciones=False
+
+contador_puntuacion_global=0
+contador_puntuacion=0
+
+recoger_puntG=True
