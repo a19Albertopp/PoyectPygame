@@ -18,13 +18,16 @@ class Boton(pygame.sprite.Sprite):
         if var.botones == 0:
             self.image = var.boton_1
             self.rect.y = var.window_height - var.window_height / 6
-            self.rect.x = var.window_width / 5
-
-        self.boton = var.botones
+            self.rect.x = var.window_width / 7
         if var.botones == 1:
             self.image = var.boton_2
             self.rect.y = var.window_height - var.window_height / 6
-            self.rect.x = var.window_width - var.window_width / 2.5
+            self.rect.x = var.window_width - var.window_width / 3
+        if var.botones == 2:
+            self.image = var.boton_menu
+            self.rect.y = var.window_height - var.window_height / 6
+            self.rect.x = var.window_width - var.window_width / 1.65
+        self.boton = var.botones
 
     def update(self, mx, my):
         if self.rect.collidepoint(mx, my):
@@ -36,6 +39,10 @@ class Boton(pygame.sprite.Sprite):
                 print('Salir')
                 pygame.quit()
                 sys.exit()
+            if self.boton == 2:
+                print('menu')
+                var.puntuaciones=False
+                var.menu=True
 
 
 Btn = pygame.sprite.Group()
@@ -48,21 +55,18 @@ def Texto(text, font, color, surface, x, y):
     surface.blit(textobj, textrect)
 
 
-
-
-
 def puntuaciones():
     while var.puntuaciones == True:
         var.screen.blit(var.fondo_puntuaciones, (0, 0))
-        font = pygame.font.SysFont("serif", 40)
-        while var.botones <= 1:
+        font = pygame.font.SysFont("serif", 40, bold=True)
+        while var.botones <= 2:
             boton = Boton()
             Btn.add(boton)
             var.botones += 1
         mx, my = pygame.mouse.get_pos()
         Btn.draw(var.screen)
         texto = font.render(str(var.puntos), True, (255, 0, 0))
-        var.screen.blit(texto, (var.window_width/2.1,var.window_height/4.5))
+        var.screen.blit(texto, (var.window_width / 2.1, var.window_height / 4.5))
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -74,21 +78,33 @@ def puntuaciones():
             if event.type == MOUSEBUTTONDOWN:
                 Btn.update(mx, my)
         conexion.Conexion.puntuacionGlobal()
-
-
+        conexion.Conexion.puntuacionPersonal()
 
         pygame.display.update()
         reloj.tick(var.fps)
 
 
 def escribirPuntGlob(datos, x, y):
-    font = pygame.font.SysFont("serif", 20)
+    font = pygame.font.SysFont("serif", 20, bold=True)
     if var.contador_puntuacion_global < 10:
         texto = font.render(datos[0], True, (255, 0, 0))
         var.screen.blit(texto, (x, y))
         texto = font.render(datos[1], True, (255, 0, 0))
         var.screen.blit(texto, (x + var.window_width / 20, y))
         texto = font.render(datos[2], True, (255, 0, 0))
-        var.screen.blit(texto, (x + + var.window_width / 22*3.5, y))
+        var.screen.blit(texto, (x + + var.window_width / 22 * 3.5, y))
         texto = font.render(datos[3], True, (255, 0, 0))
-        var.screen.blit(texto, (x + + var.window_width / 22*5.5, y))
+        var.screen.blit(texto, (x + + var.window_width / 22 * 5.5, y))
+
+
+def escribirPuntPers(datos, x, y):
+    font = pygame.font.SysFont("serif", 20, bold=True)
+    if var.contador_puntuacion_personal < 10:
+        texto = font.render(datos[0], True, (255, 0, 0))
+        var.screen.blit(texto, (x, y))
+        texto = font.render(datos[1], True, (255, 0, 0))
+        var.screen.blit(texto, (x + var.window_width / 20, y))
+        texto = font.render(datos[2], True, (255, 0, 0))
+        var.screen.blit(texto, (x + var.window_width / 22 * 3.3, y))
+        texto = font.render(datos[3], True, (255, 0, 0))
+        var.screen.blit(texto, (x + var.window_width / 22 * 5.3, y))

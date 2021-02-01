@@ -13,13 +13,19 @@ fondo_menu=pygame.image.load('res/fondo_menu.png').convert()
 fondo_puntuaciones=pygame.image.load('res/fondo_puntuaciones.png').convert()
 fondo=pygame.image.load('res/carretera1.png').convert()
 boton_1=pygame.image.load('res/boton_1.png').convert()
-boton_3=pygame.image.load('res/boton_nombre.png').convert()
-boton_2=pygame.image.load('res/boton_2.png').convert()
 boton_1=pygame.transform.scale(boton_1,(window_width//5,window_height//10))
-boton_2=pygame.transform.scale(boton_2,(window_width//5,window_height//10))
 boton_1.set_colorkey((0,0,0))
-boton_2.set_colorkey((0,0,0))
+boton_menu=pygame.image.load('res/boton_menu.png').convert()
+boton_menu=pygame.transform.scale(boton_menu,(window_width//5,window_height//10))
+boton_menu.set_colorkey((0,0,0))
+boton_puntuaciones=pygame.image.load('res/boton_puntuaciones.png').convert()
+boton_puntuaciones=pygame.transform.scale(boton_puntuaciones,(window_width//5,window_height//10))
+boton_puntuaciones.set_colorkey((0,0,0))
+boton_3=pygame.image.load('res/boton_nombre.png').convert()
 boton_3.set_colorkey((255,255,255))
+boton_2=pygame.image.load('res/boton_2.png').convert()
+boton_2=pygame.transform.scale(boton_2,(window_width//5,window_height//10))
+boton_2.set_colorkey((0,0,0))
 fondo=pygame.transform.scale(fondo,(window_width*2,window_height))
 coche=[pygame.image.load('res/coche2.png'),
         pygame.image.load('res/coche3.png')]
@@ -62,8 +68,6 @@ global segundos_actuales
 global segundos_velocidad
 
 puntuaciones=False
-
 contador_puntuacion_global=0
-contador_puntuacion=0
-
+contador_puntuacion_personal=0
 recoger_puntG=True

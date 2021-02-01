@@ -19,16 +19,18 @@ class Boton(pygame.sprite.Sprite):
             self.image = var.boton_1
             self.rect.y = var.window_height / 2 - 200
             self.rect.x = var.window_width / 2 - 200
-        self.boton = var.botones
         if var.botones == 1:
             self.image = var.boton_2
-            self.rect.y = var.window_height / 2
+            self.rect.y = var.window_height / 2 +200
             self.rect.x = var.window_width / 2 - 200
-        self.boton = var.botones
         if var.botones == 2:
             self.image = var.boton_3
             self.rect.y = var.window_height / 3.7
             self.rect.x = var.window_width / 13
+        if var.botones==3:
+            self.image = var.boton_puntuaciones
+            self.rect.y = var.window_height / 2
+            self.rect.x = var.window_width / 2 - 200
         self.boton = var.botones
 
     def update(self, mx, my):
@@ -45,6 +47,9 @@ class Boton(pygame.sprite.Sprite):
                 if (var.jugador == "ESCRIBE TU NOMBRE"):
                     var.jugador = ""
                 var.escribiendo = True
+            if self.boton==3:
+                var.menu=False
+                var.puntuaciones=True
 
 
 
@@ -81,10 +86,11 @@ Botones = pygame.sprite.Group()
 
 def menu():
     while var.menu == True:
+        var.puntos=0
         font = pygame.font.SysFont("serif", 35)
         var.screen.blit(var.fondo_menu, (0, 0))
 
-        while var.botones <= 2:
+        while var.botones <= 3:
             boton = Boton()
             Botones.add(boton)
             var.botones += 1

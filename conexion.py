@@ -44,3 +44,19 @@ class Conexion():
                 y=y+var.window_height/25
                 i += 1
                 var.contador_puntuacion_global += 1
+
+    def puntuacionPersonal():
+        query = QtSql.QSqlQuery()
+        query.prepare('select nombre, puntos, fecha from marcador where nombre=:nombre order by puntos DESC')
+        query.bindValue(':nombre',str(var.jugador))
+        i=1
+        var.contador_puntuacion_personal=0
+        if query.exec_():
+            y = var.window_height / 2-var.window_height/10
+            x = var.window_width / 1.73
+            while query.next():
+                datos = [str(i), str(query.value(0)), str(query.value(1)), str(query.value(2))]
+                puntuaciones.escribirPuntPers(datos,x,y)
+                y = y + var.window_height / 25
+                i += 1
+                var.contador_puntuacion_personal += 1
