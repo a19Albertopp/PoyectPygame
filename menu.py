@@ -49,6 +49,7 @@ class Boton(pygame.sprite.Sprite):
                 var.escribiendo = True
             if self.boton==3:
                 var.menu=False
+                var.botones=0
                 var.puntuaciones=True
 
 

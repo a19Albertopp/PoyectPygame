@@ -9,7 +9,7 @@ reloj = pygame.time.Clock()
 
 # Crear un sprite de botones y en el update comparar la posicion de los botones con el mause y si clicka que haga el evento
 
-class Boton(pygame.sprite.Sprite):
+class Bot(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
@@ -45,7 +45,7 @@ class Boton(pygame.sprite.Sprite):
                 var.menu=True
 
 
-Btn = pygame.sprite.Group()
+
 
 
 def Texto(text, font, color, surface, x, y):
@@ -54,13 +54,14 @@ def Texto(text, font, color, surface, x, y):
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
 
-
+Btn = pygame.sprite.Group()
 def puntuaciones():
+
     while var.puntuaciones == True:
         var.screen.blit(var.fondo_puntuaciones, (0, 0))
         font = pygame.font.SysFont("serif", 40, bold=True)
         while var.botones <= 2:
-            boton = Boton()
+            boton = Bot()
             Btn.add(boton)
             var.botones += 1
         mx, my = pygame.mouse.get_pos()
