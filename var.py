@@ -12,6 +12,12 @@ screen=pygame.display.set_mode((window_width, window_height))
 fondo_menu=pygame.image.load('res/fondo_menu.png').convert()
 fondo_puntuaciones=pygame.image.load('res/fondo_puntuaciones.png').convert()
 fondo=pygame.image.load('res/carretera1.png').convert()
+awsd=pygame.image.load('res/awsd.png').convert()
+awsd.set_colorkey((255,255,255))
+awsd=pygame.transform.scale(awsd,(window_width//7,window_height//7))
+awsd_arrow=pygame.image.load('res/awsd_arrows.png').convert()
+awsd_arrow.set_colorkey((255,255,255))
+awsd_arrow=pygame.transform.scale(awsd_arrow,(window_width//9,window_height//9))
 boton_1=pygame.image.load('res/boton_1.png').convert()
 boton_1=pygame.transform.scale(boton_1,(window_width//5,window_height//10))
 boton_1.set_colorkey((0,0,0))
@@ -55,12 +61,12 @@ segundos=1
 carril=0
 base='coches.db'
 botones=0
-seg=5
+seg=10
 global window
 # "Wild West Coast Racing" by Eric Matyas soundimage.org
 jugador="ESCRIBE TU NOMBRE"
 escribiendo=False
-
+aviso=False
 ce=0
 
 global tiempo_inicial

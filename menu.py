@@ -37,10 +37,12 @@ class Boton(pygame.sprite.Sprite):
         if self.rect.collidepoint(mx, my):
             if self.boton == 0:
                 if var.jugador=="ESCRIBE TU NOMBRE":
-                    pass
+                    var.aviso=True
                 else:
+                    print('jugar')
                     ini()
             if self.boton == 1:
+                print('salir')
                 pygame.quit()
                 sys.exit()
             if self.boton == 2:
@@ -48,9 +50,11 @@ class Boton(pygame.sprite.Sprite):
                     var.jugador = ""
                 var.escribiendo = True
             if self.boton==3:
+                print('puntuaciones')
                 var.menu=False
                 var.botones=0
                 var.puntuaciones=True
+                var.aviso=False
 
 
 
@@ -79,6 +83,7 @@ def ini():
     var.menu = False
     var.puntuaciones=False
     var.ce = 0
+    var.aviso=False
     Botones.remove()
 
 
@@ -122,5 +127,13 @@ def menu():
                     var.jugador = var.jugador[:-2]
         texto = font.render(var.jugador, True, (255, 0, 0))  # editText
         var.screen.blit(texto, (var.window_width / 13, var.window_height / 3.7))
+        if var.aviso==True:
+            texto2 = font.render("ESCRIBE UN NOMBRE!!!", True, (255, 0, 0))
+            var.screen.blit(texto2, (var.window_width / 2.5, var.window_height / 2.35))
+        texto3 = font.render("CONTROLES", True, (255, 0, 255))
+        var.screen.blit(texto3, (var.window_width - var.window_width/4.2, var.window_height / 3.5))
+        var.screen.blit(var.awsd, (var.window_width - var.window_width/4, var.window_height / 3))
+        var.screen.blit(var.awsd_arrow, (var.window_width - var.window_width / 4.2, var.window_height / 2))
+
         pygame.display.update()
         reloj.tick(var.fps)

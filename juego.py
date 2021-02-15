@@ -76,7 +76,7 @@ class cocheContrario(pygame.sprite.Sprite):
             self.rect.y = randint(var.window_height - (var.window_height // 4),
                                   var.window_height - (var.window_height // 8))
         self.rect.x = var.window_width + 250
-        self.velocidad = randint(var.velocidad_max-1, var.velocidad_max)
+        self.velocidad = randint(var.velocidad_max-2, var.velocidad_max)
 
     def update(self):
         # Generamos el movimiento del objeto
@@ -130,11 +130,11 @@ while True:
             enemigos.add(cochesCon)
             var.segundos_actuales=pygame.time.get_ticks()
             var.contador_tiempo += 1
-            if var.segundos > 0.4:  # 0.5 es la velocidad minima para la generacion de los coches
+            if var.segundos > 0.5:  # 0.5 es la velocidad minima para la generacion de los coches
                 if var.contador_tiempo >= var.seg:
                     # Cada vez que el contador tiempo es mayor que 4 se resta 0,1 a la variable segundos por lo que el tiempo de regeneracion de los coches disminuye
                     var.segundos -= 0.1
-                    var.seg=var.seg+3
+                    #var.seg=var.seg+2.5
                     var.contador_tiempo = 0
                     print("segundos" + str(var.segundos))
         # Creamos otro temporizador para que cada x segundos aumente la melocidad maxima de los coches
@@ -147,7 +147,7 @@ while True:
             if var.contador_velocidad > 20:
                 # Al pasar 20 segundos se incrementa la velocidad en 0.5
                 var.contador_velocidad = 0
-                if var.velocidad_max <= 6:
+                if var.velocidad_max <= 5:
                     print(var.velocidad)
                     if var.velocidad <4:
                         var.velocidad+=0.5

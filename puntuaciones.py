@@ -32,10 +32,15 @@ class Bot(pygame.sprite.Sprite):
     def update(self, mx, my):
         if self.rect.collidepoint(mx, my):
             if self.boton == 0:
-                print('JUGAR')
-                var.botones = 0
-                menu.ini()
+                if (var.jugador == "ESCRIBE TU NOMBRE"):
+                    var.menu=True
+                    var.puntuaciones=False
+                else:
+                    print('JUGAR')
+                    var.botones = 0
+                    menu.ini()
             if self.boton == 1:
+
                 print('Salir')
                 pygame.quit()
                 sys.exit()
