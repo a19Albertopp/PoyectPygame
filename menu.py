@@ -131,9 +131,9 @@ def menu():
             texto2 = font.render("ESCRIBE UN NOMBRE!!!", True, (255, 0, 0))
             var.screen.blit(texto2, (var.window_width / 2.5, var.window_height / 2.35))
         texto3 = font.render("CONTROLES", True, (255, 0, 255))
-        var.screen.blit(texto3, (var.window_width - var.window_width/4.2, var.window_height / 3.5))
-        var.screen.blit(var.awsd, (var.window_width - var.window_width/4, var.window_height / 3))
-        var.screen.blit(var.awsd_arrow, (var.window_width - var.window_width / 4.2, var.window_height / 2))
+        var.screen.blit(texto3, (var.window_width - var.window_width/4, var.window_height / 3.5))
+        var.screen.blit(var.awsd, (var.window_width - var.window_width/4, var.window_height / 2.75))
+        var.screen.blit(var.awsd_arrow, (var.window_width - var.window_width / 4, var.window_height / 1.9))
 
         pygame.display.update()
         reloj.tick(var.fps)

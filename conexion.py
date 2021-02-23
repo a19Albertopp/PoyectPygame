@@ -1,20 +1,38 @@
+import os
+import sys
+
 from PyQt5 import QtWidgets, QtSql
 from datetime import datetime
 import var, puntuaciones
-
+from res import *
 
 class Conexion():
     def db_connect(filename):
         db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
-        db.setDatabaseName(filename)
+        db.setDatabaseName(Conexion.resource_path(filename))
         if not db.open():
             QtWidgets.QMessageBox.critical(None, 'No se puede abrir la base de datos',
                                            'No se puede establecer conexion.\n' 'Haz Click para Cancelar.',
                                            QtWidgets.QMessageBox.Cancel)
             return False
         else:
+            Conexion.crearTablas()
             print('Conexión Establecida')
         return True
+
+    def resource_path(relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+
+    def crearTablas():
+        query = QtSql.QSqlQuery()
+        query.prepare('CREATE TABLE IF NOT EXISTS marcador(nombre VARCHAR NOT NULL,puntos INTEGER NOT NULL,fecha VARCHAR NOT NULL)')
+        if query.exec_():
+            print('tablas creadas')
 
     def guardarPuntuacion():
         query = QtSql.QSqlQuery()
