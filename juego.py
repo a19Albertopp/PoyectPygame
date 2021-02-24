@@ -87,12 +87,13 @@ class cocheContrario(pygame.sprite.Sprite):
 
 # Iniciamos pygame
 pygame.init()
+pygame.display.set_icon(var.icono)
 pygame.display.set_caption("Drunk Driver")
 conexion.Conexion.db_connect(var.base)
 reloj = pygame.time.Clock()
 key = pygame.key.get_pressed()
 while True:
-    if var.ce==0:
+    if var.sprites_iniciales==0:
         # agregamos el coche que controlamos al grupo de sprites
         cochePrincipal = pygame.sprite.Group()
         coche = Coche()
@@ -101,7 +102,7 @@ while True:
         enemigos = pygame.sprite.Group()
         cochesCon = cocheContrario()
         enemigos.add(cochesCon)
-        var.ce+=1
+        var.sprites_iniciales+=1
 
 
     for event in pygame.event.get():
@@ -137,8 +138,6 @@ while True:
                     #var.seg=var.seg+2.5
                     var.contador_tiempo = 0
                     print("segundos" + str(var.segundos))
-        # Creamos otro temporizador para que cada x segundos aumente la melocidad maxima de los coches
-        var.temporizador2 += 1
         tiempo2 = (pygame.time.get_ticks()-var.segundos_velocidad)/1000
         if tiempo2 >= 1:
             # Incrementamos el contador de velocidad cada segundo de ejecucion
@@ -154,7 +153,6 @@ while True:
                     var.velocidad_max += 1
 
         eventos.Movimientos.Salir()
-        eventos.Movimientos.AtrasMenu()
         if var.chocar == False:
             eventos.Movimientos.MovimientoFondo()
             # Dibujamos los sprites y hacemos los updates de los mismos
@@ -172,7 +170,6 @@ while True:
 
             if colision:
                 var.velocidad = 0
-                eventos.Movimientos.mensajeChocar()
                 conexion.Conexion.guardarPuntuacion()
                 var.chocar = True
                 var.jugando = False

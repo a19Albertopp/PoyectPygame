@@ -4,6 +4,8 @@ import pygame, var, menu, conexion
 
 from pygame.locals import *
 
+import eventos
+
 reloj = pygame.time.Clock()
 
 
@@ -33,24 +35,20 @@ class Bot(pygame.sprite.Sprite):
         if self.rect.collidepoint(mx, my):
             if self.boton == 0:
                 if (var.jugador == "ESCRIBE TU NOMBRE"):
-                    var.menu=True
-                    var.puntuaciones=False
+                    var.menu = True
+                    var.puntuaciones = False
                 else:
                     print('JUGAR')
                     var.botones = 0
                     menu.ini()
             if self.boton == 1:
-
                 print('Salir')
                 pygame.quit()
                 sys.exit()
             if self.boton == 2:
                 print('menu')
-                var.puntuaciones=False
-                var.menu=True
-
-
-
+                var.puntuaciones = False
+                var.menu = True
 
 
 def Texto(text, font, color, surface, x, y):
@@ -59,10 +57,13 @@ def Texto(text, font, color, surface, x, y):
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
 
-Btn = pygame.sprite.Group()
-def puntuaciones():
 
+Btn = pygame.sprite.Group()
+
+
+def puntuaciones():
     while var.puntuaciones == True:
+        eventos.Movimientos.Salir()
         var.screen.blit(var.fondo_puntuaciones, (0, 0))
         font = pygame.font.SysFont("serif", 40, bold=True)
         while var.botones <= 2:
@@ -81,8 +82,21 @@ def puntuaciones():
                 if event.key == K_ESCAPE:
                     pygame.quit()
                     sys.exit()
+                if event.key == K_m:
+                    var.puntuaciones = False
+                    var.menu = True
+                if event.key == K_RETURN:
+                    if var.jugador == "ESCRIBE TU NOMBRE":
+                        var.menu = True
+                        var.puntuaciones = False
+                    else:
+                        print('JUGAR')
+                        var.botones = 0
+                        menu.ini()
+
             if event.type == MOUSEBUTTONDOWN:
                 Btn.update(mx, my)
+
         conexion.Conexion.puntuacionGlobal()
         conexion.Conexion.puntuacionPersonal()
 

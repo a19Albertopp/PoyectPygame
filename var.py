@@ -1,17 +1,19 @@
 from win32api import GetSystemMetrics
 import pygame
 
-window_height=GetSystemMetrics(1)
+window_height=GetSystemMetrics(1) #recoge las dimensiones de la pantalla
 window_width=GetSystemMetrics(0)
 import conexion
 
-
-
-
 screen=pygame.display.set_mode((window_width, window_height))
+
+#Cargamos todas las imagenes
+
 fondo_menu=pygame.image.load(conexion.Conexion.resource_path('res/fondo_menu.png')).convert()
 fondo_puntuaciones=pygame.image.load(conexion.Conexion.resource_path('res/fondo_puntuaciones.png')).convert()
 fondo=pygame.image.load(conexion.Conexion.resource_path('res/carretera1.png')).convert()
+icono=pygame.image.load(conexion.Conexion.resource_path('res/icono.png')).convert()
+icono.set_colorkey((255,255,255))
 awsd=pygame.image.load(conexion.Conexion.resource_path('res/awsd.png')).convert()
 awsd.set_colorkey((255,255,255))
 awsd=pygame.transform.scale(awsd,(window_width//9,window_height//9))
@@ -41,6 +43,8 @@ coche2=[pygame.image.load(conexion.Conexion.resource_path('res/coche_con1.png'))
         pygame.image.load(conexion.Conexion.resource_path('res/coche_con4.png')),
         pygame.image.load(conexion.Conexion.resource_path('res/coche_con5.png')),
         pygame.image.load(conexion.Conexion.resource_path('res/coche_con6.png'))]
+
+
 chocar=False
 mov=False
 jugando=False
@@ -52,8 +56,6 @@ puntos=0
 cx=window_width*0.1
 cy=window_height*0.35
 fps=144
-temporizador=0
-temporizador2=0
 contador_tiempo=0
 contador_velocidad=0
 velocidad_max=4
@@ -62,12 +64,12 @@ carril=0
 base='coches.db'
 botones=0
 seg=10
-global window
 # "Wild West Coast Racing" by Eric Matyas soundimage.org
 jugador="ESCRIBE TU NOMBRE"
 escribiendo=False
+escribiendo2=False
 aviso=False
-ce=0
+sprites_iniciales=0
 
 global tiempo_inicial
 global segundos_actuales
@@ -76,4 +78,3 @@ global segundos_velocidad
 puntuaciones=False
 contador_puntuacion_global=0
 contador_puntuacion_personal=0
-recoger_puntG=True

@@ -9,7 +9,7 @@ from res import *
 class Conexion():
     def db_connect(filename):
         db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
-        db.setDatabaseName(Conexion.resource_path(filename))
+        db.setDatabaseName(filename)
         if not db.open():
             QtWidgets.QMessageBox.critical(None, 'No se puede abrir la base de datos',
                                            'No se puede establecer conexion.\n' 'Haz Click para Cancelar.',
@@ -21,6 +21,9 @@ class Conexion():
         return True
 
     def resource_path(relative_path):
+        """
+        Busca la ruta de los archivos para el onefile
+        """
         try:
             base_path = sys._MEIPASS
         except Exception:
