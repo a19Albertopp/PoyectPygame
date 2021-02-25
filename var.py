@@ -64,7 +64,6 @@ carril=0
 base='coches.db'
 botones=0
 seg=10
-# "Wild West Coast Racing" by Eric Matyas soundimage.org
 jugador="ESCRIBE TU NOMBRE"
 escribiendo=False
 escribiendo2=False

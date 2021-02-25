@@ -90,7 +90,6 @@ Botones = pygame.sprite.Group()
 def menu():
     while var.menu == True:
         eventos.Movimientos.Salir()
-        var.puntos = 0
         font = pygame.font.SysFont("serif", 35)
         font2 = pygame.font.SysFont("serif", 35, bold=True)
         var.screen.blit(var.fondo_menu, (0, 0))

@@ -116,7 +116,7 @@ while True:
     if var.jugando == True:
         if var.musica == 1:
             # agregamos la musica con un bucle infinito al iniciar pygame
-            pygame.mixer.music.load(conexion.Conexion.resource_path('res/Wild West Coast Racing.mp3'))
+            pygame.mixer.music.load(conexion.Conexion.resource_path('res/Wild West Coast Racing.mp3')) # "Wild West Coast Racing" by Eric Matyas soundimage.org
             pygame.mixer.music.play(-1)
             pygame.mixer.music.set_volume(0.1)
             var.musica = 0
@@ -166,7 +166,7 @@ while True:
 
 
 
-            # Al colisionar se cambia la velocidad a 0 por lo que no hay movimiento
+            # Al colisionar se visualiza las puntuaciones
 
             if colision:
                 var.velocidad = 0
@@ -181,5 +181,5 @@ while True:
 
     if var.menu==True:
         menu.menu()
-    else:
+    if var.puntuaciones==True:
         puntuaciones.puntuaciones()
